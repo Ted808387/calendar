@@ -8,6 +8,8 @@ require('dotenv/config');
 const port = process.env.PORT || 3000;
 
 server.get('/', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
     res.sendFile(__dirname + '/index.html')
 })
 
@@ -16,6 +18,8 @@ server.use(bodyParser.json());
 server.get('/calendar', (req, res) => {
     db.collection('calendar').find().toArray((err, result) => {
         if(err) throw err
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
         res.send({ data: result })
     })
 })
@@ -25,6 +29,8 @@ server.post('/calendar', (req, res) => {
     db.collection('calendar').insertOne(req.body, (err, result) => {
         if (err) throw err
         console.log('saved to database')
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
         res.send(req.body);
     });
 })
@@ -34,6 +40,8 @@ server.delete('/calendar/:id', (req, res) => {
     db.collection('calendar').deleteOne(obj, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
         res.send('delete success!')
     })
 })
@@ -45,6 +53,8 @@ server.put('/calendar/:id', (req, res) => {
     db.collection('calendar').updateOne(obj, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', '*');
         res.send('update success!')
     })
 })
