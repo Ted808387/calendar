@@ -36,7 +36,7 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    let id = { _id: ObjectID(req.params.id) } // 使用name或者使用id都可以，將參數放在最後端
+    let id = { day: req.params.id } // 使用name或者使用id都可以，將參數放在最後端
     if(!id){
         res.sendStatus(403);
     }
