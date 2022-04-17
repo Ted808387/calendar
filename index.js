@@ -36,7 +36,7 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    const id = { list: { id: Number(req.params.id) } }
+    const id = { id: Number(req.params.id) }
     if(!id){
         res.sendStatus(403);
     }
