@@ -36,7 +36,7 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    const obj = { name: req.params.id } // 使用name或者使用id都可以，將參數放在最後端
+    const obj = { list: {id: req.params.id} } // 使用name或者使用id都可以，將參數放在最後端
     db.collection('calendar').deleteOne(obj, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
@@ -47,7 +47,7 @@ server.delete('/calendar/:id', (req, res) => {
 server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
-    const obj = { name: req.params.id }
+    const obj = { list: {id: req.params.id} }
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').updateOne(obj, newvalus, (err, obj) => {
