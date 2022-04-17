@@ -40,7 +40,7 @@ server.delete('/calendar/:id', (req, res) => {
     if(!params){
         res.sendStatus(403);
     }
-    db.collection('calendar').deleteOne(params, (err, obj) => {
+    db.collection('calendar').deleteOne(params.toString(), (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
         res.send('delete success!')
