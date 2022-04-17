@@ -26,22 +26,22 @@ server.get('/calendar', (req, res) => {
 
 server.post('/calendar', (req, res) => {
     console.log(req.body);
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').insertOne(req.body, (err, result) => {
         if (err) throw err
         console.log('saved to database')
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', '*');
         res.send(req.body);
     });
 })
 
 server.delete('/calendar/:id', (req, res) => {
     const obj = { name: req.params.id } // 使用name或者使用id都可以，將參數放在最後端
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').deleteOne(obj, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', '*');
         res.send('delete success!')
     })
 })
@@ -50,11 +50,11 @@ server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
     const obj = { name: req.params.id }
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').updateOne(obj, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', '*');
         res.send('update success!')
     })
 })
