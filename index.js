@@ -36,11 +36,12 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    let id = { date: req.params.id }
+    let id = { id: req.params.id }
     if(!id){
         res.sendStatus(403);
     }
-    db.collection('calendar').deleteOne(id, (err, obj) => {
+    let bb = Number(id)
+    db.collection('calendar').deleteOne(bb, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
         res.send('delete success!')
