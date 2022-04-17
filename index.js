@@ -52,8 +52,6 @@ server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
     const params = { list: {id: req.params.id} }
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').updateOne(params, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
