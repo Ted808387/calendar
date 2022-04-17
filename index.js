@@ -8,9 +8,12 @@ require('dotenv/config');
 const port = process.env.PORT || 3000;
 
 server.get('/', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
     res.sendFile(__dirname + '/index.html')
+})
+server.use((req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 })
 
 server.use(bodyParser.json());
@@ -18,16 +21,12 @@ server.use(bodyParser.json());
 server.get('/calendar', (req, res) => {
     db.collection('calendar').find().toArray((err, result) => {
         if(err) throw err
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', '*');
         res.send({ data: result })
     })
 })
 
 server.post('/calendar', (req, res) => {
     console.log(req.body);
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').insertOne(req.body, (err, result) => {
         if (err) throw err
         console.log('saved to database')
@@ -37,8 +36,6 @@ server.post('/calendar', (req, res) => {
 
 server.delete('/calendar/:id', (req, res) => {
     const obj = { name: req.params.id } // 使用name或者使用id都可以，將參數放在最後端
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
     db.collection('calendar').deleteOne(obj, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
