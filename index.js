@@ -51,7 +51,7 @@ server.delete('/calendar/:id', (req, res) => {
 server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
-    const params = { list: {id: req.params.id} }
+    const params = { list: { id: req.params.id } }
     db.collection('calendar').updateOne(params, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
