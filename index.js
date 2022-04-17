@@ -36,8 +36,11 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    const obj = { list: {id: req.params.id} } // 使用name或者使用id都可以，將參數放在最後端
-    db.collection('calendar').deleteOne(obj, (err, obj) => {
+    const params = { list: {id: req.params.id} } // 使用name或者使用id都可以，將參數放在最後端
+    if(!params){
+        res.sendStatus(403);
+    }
+    db.collection('calendar').deleteOne(params, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
         res.send('delete success!')
@@ -47,10 +50,10 @@ server.delete('/calendar/:id', (req, res) => {
 server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
-    const obj = { list: {id: req.params.id} }
+    const params = { list: {id: req.params.id} }
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
-    db.collection('calendar').updateOne(obj, newvalus, (err, obj) => {
+    db.collection('calendar').updateOne(params, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
         res.send('update success!')
