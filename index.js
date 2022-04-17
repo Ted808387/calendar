@@ -36,13 +36,14 @@ server.post('/calendar', (req, res) => {
 })
 
 server.delete('/calendar/:id', (req, res) => {
-    const params = { title: req.params.id } // 使用name或者使用id都可以，將參數放在最後端
+    const params = { list: { id:req.params.id } } // 使用name或者使用id都可以，將參數放在最後端
     if(!params){
         res.sendStatus(403);
     }
     db.collection('calendar').deleteOne(params, (err, obj) => {
         if (err) throw err
         console.log('1 document deleted')
+        res.send(params)
         res.send('delete success!')
     })
 })
