@@ -51,7 +51,6 @@ server.put('/calendar/:id', (req, res) => {
     console.log(req.params.id, req.body)
     const newvalus = {$set: req.body}
     const id = {'list.id':Number(req.params.id)}
-    // const id = { date:req.params.id }
     db.collection('calendar').updateOne(id, newvalus, (err, obj) => {
         if (err) throw err
         console.log('1 document update')
